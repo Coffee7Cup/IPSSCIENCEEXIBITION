@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const RegistrationPage = () => {
+  const [projectTheme, setProjectTheme] = useState('');
   const [projectName, setProjectName] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
   const [teamLeader, setTeamLeader] = useState({
@@ -129,7 +130,7 @@ const RegistrationPage = () => {
         pincode: '',
         collegeAddress: '',
         collegePincode: '',
-        isMadhyaPradeshResident: false
+        isMadhyaPradeshResident: true
       }]);
     } else {
       toast.error("You cannot add more than 3 team members");
@@ -168,6 +169,7 @@ const RegistrationPage = () => {
 
     try {
       const projectData = {
+        projectData,
         projectName,
         projectDescription,
         teamLeader,
@@ -176,7 +178,7 @@ const RegistrationPage = () => {
 
       await setDoc(doc(db, 'projects', Date.now().toString()), projectData);
       toast.success('Project registered successfully!');
-      navigate('/projects');
+      navigate('/reactapp');
     } catch (error) {
       console.error('Error registering project:', error);
       toast.error('Error registering project. Please try again.');
@@ -193,6 +195,15 @@ const RegistrationPage = () => {
     <div className="p-5 max-w-2xl mx-auto">
       <h1 className="text-center text-2xl font-bold mb-5">Project Registration</h1>
       <form onSubmit={handleSubmit}>
+      <div className="mb-2">
+              <label>Project Theme:</label>
+              <select value={projectTheme} onChange={(e) => setProjectTheme(e.target.value)} required className="w-full p-2 border border-gray-300 rounded">
+                <option value="">Select Project Theme</option>
+                <option value="Social Impact">Social Impact</option>
+                <option value="Economic Impact">Economic Impact</option>
+                <option value="Environmental Impact">Environmental Impact</option>
+              </select>
+            </div>
         <div className="mb-4">
           <label className="block mb-1">Project Title:</label>
           <input type="text" value={projectName} onChange={(e) => setProjectName(e.target.value)} required className="w-full p-2 border border-gray-300 rounded" />
@@ -297,12 +308,19 @@ const RegistrationPage = () => {
             </div>
             <div className="mb-2">
               <label>Year:</label>
-              <input type="text" value={member.year} onChange={(e) => handleTeamMemberChange(index, 'year', e.target.value)} required className="w-full p-2 border border-gray-300 rounded" />
+              {/* <input type="text" value={member.year} onChange={(e) => handleTeamMemberChange(index, 'year', e.target.value)} required className="w-full p-2 border border-gray-300 rounded" /> */}
+              <select value={member.year} onChange={(e) => handleTeamMemberChange(index, 'year', e.target.value)} required className="w-full p-2 border border-gray-300 rounded">
+                <option value="">Select Year</option>
+                <option value="1st Year">1st Year</option>
+                <option value="2nd Year">2nd Year</option>
+                <option value="3rd Year">3rd Year</option>
+                <option value="4th Year">4th Year</option>
+                <option value="5th Year">5th Year</option>
+              </select>
             </div>
             <div className="mb-2">
               <label>Branch:</label>
-              <input type="text" value={member.branch} onChange={(e) => handleTeamMemberChange(index, 'branch', e.target.value)} required className=" ```jsx
-              w-full p-2 border border-gray-300 rounded" />
+              <input type="text" value={member.branch} onChange={(e) => handleTeamMemberChange(index, 'branch', e.target.value)} required className="w-full p-2 border border-gray-300 rounded" />
             </div>
             <div className="mb-2">
               <label>Blood Group:</label>

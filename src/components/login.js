@@ -35,7 +35,7 @@ const Login = () => {
       return false;
     }
 
-    if (parseInt(answer, 10) !== correctAnswer) {
+    if (isNaN(answer) || parseInt(answer, 10) !== correctAnswer) {
       toast.error('Incorrect answer. Please try again.');
       return false;
     }
@@ -65,14 +65,15 @@ const Login = () => {
 
       // Proceed with login if the email is verified
       toast.success('Login successful!');
-      navigate('/'); // Redirect to home after successful login
+      navigate('/reactapp'); // Redirect to home after successful login
     } catch (error) {
+      console.error(error); // Log error for debugging
       if (error.code === 'auth/user-not-found') {
         toast.error('User not found. Please check your credentials.');
       } else if (error.code === 'auth/wrong-password') {
         toast.error('Incorrect password. Please try again.');
       } else {
-        toast.error('Error logging in. Please try again.');
+        toast.error(error.message || 'Error logging in. Please try again.');
       }
       setIsLoading(false); // Stop loading if error occurs
     }
@@ -80,20 +81,25 @@ const Login = () => {
 
   const resendVerificationEmail = async () => {
     try {
-      const user = auth.currentUser;
-      if (user) {
-        await sendEmailVerification(user);
-        toast.success('Verification email sent. Please check your inbox.');
-        setShowResend(false); // Hide resend button after sending
-      } else {
+      const user = auth.currentUser; // Make sure user is authenticated
+      if (!user) {
         toast.error('No user is currently logged in.');
+        return;
       }
+      await sendEmailVerification(user);
+      toast.success('Verification email sent. Please check your inbox.');
+      setShowResend(false); // Hide resend button after sending
     } catch (error) {
       toast.error('Error sending verification email. Please try again.');
     }
   };
 
   const handleForgotPassword = async () => {
+    if (!email) {
+      toast.error('Please enter an email address.');
+      return;
+    }
+
     if (!isValidEmail(email)) {
       toast.error('Please enter a valid email address to reset the password.');
       return;

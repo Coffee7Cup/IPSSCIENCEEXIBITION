@@ -50,7 +50,7 @@ const Header = () => {
       setIsLoggedIn(false);
       setUserName('');
       setIsEmailVerified(false);
-      navigate('/');
+      navigate('/reactapp');
       setIsMobileMenuOpen(false);
     } catch (error) {
       console.error('Error logging out:', error.message);
@@ -66,7 +66,7 @@ const Header = () => {
     <nav className="bg-primary text-white shadow-lg p-4">
       <div className="container mx-auto max-w-7xl flex items-center justify-between">
         {/* Logo Section */}
-        <Link to="/" className="flex items-center space-x-2">
+        <Link to="/reactapp" className="flex items-center space-x-2">
           <img
             src={mainLogo}
             alt="Main Logo"

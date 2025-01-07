@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db, auth } from './firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { sendEmailVerification } from 'firebase/auth';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -87,12 +88,16 @@ const Signup = () => {
       return;
     }
   
-    setIsLoading(true);  // Show loader
+    setIsLoading(true); // Show loader
   
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
   
+      // Send email verification
+      await sendEmailVerification(user);
+  
+      // Save additional user data to Firestore
       await setDoc(doc(db, 'users', user.uid), {
         salutation,
         firstName,
@@ -111,7 +116,7 @@ const Signup = () => {
         isMadhyaPradeshResident,
       });
   
-      toast.success('Account created successfully! Please verify your email.');
+      toast.success('Account created successfully! A verification email has been sent. Please verify your email.');
       navigate('/login');
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
@@ -122,7 +127,7 @@ const Signup = () => {
         toast.error('Error creating account. Please try again.');
       }
     } finally {
-      setIsLoading(false);  // Hide loader
+      setIsLoading(false); // Hide loader
     }
   };
   
