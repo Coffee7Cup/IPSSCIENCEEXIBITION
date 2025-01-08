@@ -2,48 +2,68 @@ import React from "react";
 // import Masonry from './Masonry';
 import GridMotion from "./GridMotion";
 import SplitText from "./SplitText";
+import SpotlightCard from "./SpotlightCard";
 
 function gallery() {
-  // note: you'll need to make sure the parent container of this component is sized properly
-  const items = [
-    "Item 1",
-    <div key="jsx-item-1">Custom JSX Content</div>,
-    "https://images.unsplash.com/photo-1723403804231-f4e9b515fe9d?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "Item 2",
-    <div key="jsx-item-2">Custom JSX Content</div>,
-    "Item 4",
-    <div key="jsx-item-2">Custom JSX Content</div>,
-    "https://images.unsplash.com/photo-1723403804231-f4e9b515fe9d?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "Item 5",
-    <div key="jsx-item-2">Custom JSX Content</div>,
-    "Item 7",
-    <div key="jsx-item-2">Custom JSX Content</div>,
-    "https://images.unsplash.com/photo-1723403804231-f4e9b515fe9d?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "Item 8",
-    <div key="jsx-item-2">Custom JSX Content</div>,
-    "Item 10",
-    <div key="jsx-item-3">Custom JSX Content</div>,
-    "https://images.unsplash.com/photo-1723403804231-f4e9b515fe9d?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "Item 11",
-    <div key="jsx-item-2">Custom JSX Content</div>,
-    "Item 13",
-    <div key="jsx-item-4">Custom JSX Content</div>,
-    "https://images.unsplash.com/photo-1723403804231-f4e9b515fe9d?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "Item 14",
-    // Add more items as needed
-  ];
+  //the photos from back end will go here
+  const items = Array(28)
+    .fill()
+    .map((_, index) => <div>Item {index + 1}</div>);
 
   const handleAnimationComplete = () => {
-    // console.log("All letters have animated!");
+    //dummmy function
   };
+
+  //items are taken from the backend
+  const GalleryElements = [
+    {
+      img: "https://via.placeholder.com/300x200",
+      heading: "Sunset Over the Hills",
+      description:
+        "A breathtaking view of the sun setting over lush green hills.",
+    },
+    {
+      img: "https://via.placeholder.com/300x200",
+      heading: "Tranquil Lake",
+      description:
+        "The still waters of a lake reflecting the surrounding trees.",
+    },
+    {
+      img: "https://via.placeholder.com/300x200",
+      heading: "City Skyline",
+      description: "A bustling city skyline glowing under the night sky.",
+    },
+    {
+      img: "https://via.placeholder.com/300x200",
+      heading: "Golden Sands",
+      description: "Golden sand dunes stretching into the horizon.",
+    },
+    {
+      img: "https://via.placeholder.com/300x200",
+      heading: "Forest Trail",
+      description: "A serene trail winding through a dense forest.",
+    },
+    {
+      img: "https://via.placeholder.com/300x200",
+      heading: "Mountain Peak",
+      description: "A majestic mountain peak covered in snow.",
+    },
+  ];
 
   return (
     <>
       <div className="relative flex fustify-center items-center overflow-hidden ">
-        <div className="relative flex fustify-center items-center overflow-hidden opacity-80 bg-black/50 h-screen w-screen">
+        <div
+          className="relative flex justify-center items-center overflow-hidden bg-white h-screen w-screen"
+          style={{
+            WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
+            maskImage: "linear-gradient(to bottom, black, transparent)",
+          }}
+        >
           <GridMotion items={items} />
         </div>
-        <div className="absolute z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white">
+
+        <div className="absolute z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black">
           <SplitText
             text="Gallery!"
             className="text-[10rem] font-semibold text-center"
@@ -57,8 +77,34 @@ function gallery() {
           />
         </div>
       </div>
-      <div>
-        
+      <div className="flex flex-wrap justify-around gap-6 p-6">
+        {GalleryElements.map((item, index) => (
+          <div
+            key={index}
+            className="flex flex-col items-center justify-between border rounded-lg shadow-md w-[40vw] h-[400px] bg-white"
+          >
+            <SpotlightCard
+              className="custom-spotlight-card w-full h-full"
+              spotlightColor="rgba(0, 0, 0, 0.6)"
+            >
+              <div className="flex items-center p-4">
+                {/* Make sure the image's container has enough height and width */}
+                <div className="w-full h-[300px]">
+                  <img
+                    src={item.img} // Correct source dynamically
+                    alt={item.heading}
+                    className="rounded-lg w-full h-full object-cover absolute" // Ensure image is responsive and fits container
+                  />
+                </div>
+
+                <div className="text-center mt-4">
+                  <h2 className="text-lg font-bold">{item.heading}</h2>
+                  <p className="text-sm">{item.description}</p>
+                </div>
+              </div>
+            </SpotlightCard>
+          </div>
+        ))}
       </div>
     </>
   );

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import './GridMotion.css';
 
-const GridMotion = ({ items = [], gradientColor = 'black' }) => {
+const GridMotion = ({ items = [], gradientColor = 'white' }) => {
   const gridRef = useRef(null);
   const rowRefs = useRef([]); // Array of refs for each row
   const mouseXRef = useRef(window.innerWidth / 2);
