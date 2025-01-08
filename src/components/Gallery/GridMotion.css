@@ -28,7 +28,7 @@
     z-index: 4;
   }
   
-  .grid {
+  .grid_ {
     gap: 1rem;
     flex: none;
     position: relative;
@@ -42,7 +42,7 @@
     z-index: 2;
   }
   
-  .row {
+  .row_ {
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(7, 1fr);

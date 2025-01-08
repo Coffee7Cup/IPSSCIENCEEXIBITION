@@ -93,7 +93,7 @@ function gallery() {
                   <img
                     src={item.img} // Correct source dynamically
                     alt={item.heading}
-                    className="rounded-lg w-full h-full object-cover absolute" // Ensure image is responsive and fits container
+                    className="rounded-lg w-[300px] h-[300px] object-cover" // Ensure image is responsive and fits container
                   />
                 </div>
 

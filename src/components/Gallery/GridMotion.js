@@ -57,11 +57,11 @@ const GridMotion = ({ items = [], gradientColor = 'white' }) => {
           background: `radial-gradient(circle, ${gradientColor} 100%, transparent 50%)`,
         }}
       >
-        <div className="grid">
+        <div className="grid_">
           {[...Array(4)].map((_, rowIndex) => (
             <div
               key={rowIndex}
-              className="row"
+              className="row_"
               ref={(el) => (rowRefs.current[rowIndex] = el)}
             >
               {[...Array(7)].map((_, itemIndex) => {
